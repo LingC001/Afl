@@ -1,8 +1,8 @@
-import glob from 'glob';
+import glob from 'glob'
 
 export default function(dirname) {
   return new Promise((resolve, reject) => {
-    const routes = [];
+    const routes = []
     glob(
       `${dirname}/*`,
       {
@@ -10,14 +10,14 @@ export default function(dirname) {
       },
       (err, files) => {
         if (err) {
-          return reject(err);
+          return reject(err)
         }
         files.forEach(file => {
-          const route = require(file); // eslint-disable-line global-require, import/no-dynamic-require
-          routes.push(route);
-        });
-        return resolve(routes);
+          const route = require(file) // eslint-disable-line global-require, import/no-dynamic-require
+          routes.push(route)
+        })
+        return resolve(routes)
       }
-    );
-  });
+    )
+  })
 }

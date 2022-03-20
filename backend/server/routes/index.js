@@ -1,4 +1,4 @@
-import routesLoader from '../utils/routesLoader';
+import routesLoader from '../utils/routesLoader'
 
 export default function(app) {
   routesLoader(`${__dirname}`).then(files => {
@@ -7,7 +7,7 @@ export default function(app) {
         route.allowedMethods({
           throw: true
         })
-      );
-    });
-  });
+      )
+    })
+  })
 }

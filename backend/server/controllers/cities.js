@@ -1,4 +1,4 @@
-import City from '../models/cities';
+import City from '../models/cities'
 
 class CitiesControllers {
   /* eslint-disable no-param-reassign */
@@ -8,7 +8,7 @@ class CitiesControllers {
    * @param {ctx} Koa Context
    */
   async find(ctx) {
-    ctx.body = await City.find();
+    ctx.body = await City.find()
   }
 
   /**
@@ -17,16 +17,16 @@ class CitiesControllers {
    */
   async findById(ctx) {
     try {
-      const city = await City.findById(ctx.params.id);
+      const city = await City.findById(ctx.params.id)
       if (!city) {
-        ctx.throw(404);
+        ctx.throw(404)
       }
-      ctx.body = city;
+      ctx.body = city
     } catch (err) {
       if (err.name === 'CastError' || err.name === 'NotFoundError') {
-        ctx.throw(404);
+        ctx.throw(404)
       }
-      ctx.throw(500);
+      ctx.throw(500)
     }
   }
 
@@ -35,11 +35,13 @@ class CitiesControllers {
    * @param {ctx} Koa Context
    */
   async add(ctx) {
+    console.log('ctx',ctx.state)
+    // console.log('payload----',payload)
     try {
-      const city = await new City(ctx.request.body).save();
-      ctx.body = city;
+      const city = await new City(ctx.request.body).save()
+      ctx.body = city
     } catch (err) {
-      ctx.throw(422);
+      ctx.throw(422)
     }
   }
 
@@ -52,16 +54,16 @@ class CitiesControllers {
       const city = await City.findByIdAndUpdate(
         ctx.params.id,
         ctx.request.body
-      );
+      )
       if (!city) {
-        ctx.throw(404);
+        ctx.throw(404)
       }
-      ctx.body = city;
+      ctx.body = city
     } catch (err) {
       if (err.name === 'CastError' || err.name === 'NotFoundError') {
-        ctx.throw(404);
+        ctx.throw(404)
       }
-      ctx.throw(500);
+      ctx.throw(500)
     }
   }
 
@@ -71,20 +73,20 @@ class CitiesControllers {
    */
   async delete(ctx) {
     try {
-      const city = await City.findByIdAndRemove(ctx.params.id);
+      const city = await City.findByIdAndRemove(ctx.params.id)
       if (!city) {
-        ctx.throw(404);
+        ctx.throw(404)
       }
-      ctx.body = city;
+      ctx.body = city
     } catch (err) {
       if (err.name === 'CastError' || err.name === 'NotFoundError') {
-        ctx.throw(404);
+        ctx.throw(404)
       }
-      ctx.throw(500);
+      ctx.throw(500)
     }
   }
 
   /* eslint-enable no-param-reassign */
 }
 
-export default new CitiesControllers();
+export default new CitiesControllers()
