@@ -6,15 +6,15 @@ import helmet from 'koa-helmet'
 import routing from './routes'
 import { port, connexionString } from './config'
 
-mongoose.connect(connexionString,{
+mongoose.connect(connexionString, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 })
   .then(() => {
-    console.log("Connected to the database!")
+    console.log('Connected to the database!')
   })
-  .catch(err => {
-    console.log("Cannot connect to the database!", err)
+  .catch((err) => {
+    console.log('Cannot connect to the database!', err)
     process.exit()
   })
 mongoose.connection.on('error', console.error)
@@ -30,7 +30,5 @@ app
 routing(app)
 
 // Start the application
-app.listen(port, () =>
-  console.log(`✅  The server is running at http://localhost:${port}/`)
-)
+app.listen(port, () => console.log(`✅  The server is running at http://localhost:${port}/`))
 export default app

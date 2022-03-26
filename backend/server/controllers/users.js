@@ -1,27 +1,27 @@
-import City from '../models/cities'
+import User from '../models/users'
 
-class CitiesControllers {
+class UsersControllers {
   /* eslint-disable no-param-reassign */
 
   /**
-   * Get all cities
+   * Get all users
    * @param {ctx} Koa Context
    */
   async find(ctx) {
-    ctx.body = await City.find()
+    ctx.body = await User.find()
   }
 
   /**
-   * Find a city
+   * Find a user
    * @param {ctx} Koa Context
    */
   async findById(ctx) {
     try {
-      const city = await City.findById(ctx.params.id)
-      if (!city) {
+      const user = await User.findById(ctx.params.id)
+      if (!user) {
         ctx.throw(404)
       }
-      ctx.body = city
+      ctx.body = user
     } catch (err) {
       if (err.name === 'CastError' || err.name === 'NotFoundError') {
         ctx.throw(404)
@@ -31,34 +31,34 @@ class CitiesControllers {
   }
 
   /**
-   * Add a city
+   * Add a user
    * @param {ctx} Koa Context
    */
   async add(ctx) {
-    console.log('ctx',ctx.state)
+    console.log('ctx', ctx.state)
     // console.log('payload----',payload)
     try {
-      const city = await new City(ctx.request.body).save()
-      ctx.body = city
+      const user = await new User(ctx.request.body).save()
+      ctx.body = user
     } catch (err) {
       ctx.throw(422)
     }
   }
 
   /**
-   * Update a city
+   * Update a user
    * @param {ctx} Koa Context
    */
   async update(ctx) {
     try {
-      const city = await City.findByIdAndUpdate(
+      const user = await User.findByIdAndUpdate(
         ctx.params.id,
-        ctx.request.body
+        ctx.request.body,
       )
-      if (!city) {
+      if (!user) {
         ctx.throw(404)
       }
-      ctx.body = city
+      ctx.body = user
     } catch (err) {
       if (err.name === 'CastError' || err.name === 'NotFoundError') {
         ctx.throw(404)
@@ -68,16 +68,16 @@ class CitiesControllers {
   }
 
   /**
-   * Delete a city
+   * Delete a user
    * @param {ctx} Koa Context
    */
   async delete(ctx) {
     try {
-      const city = await City.findByIdAndRemove(ctx.params.id)
-      if (!city) {
+      const user = await User.findByIdAndRemove(ctx.params.id)
+      if (!user) {
         ctx.throw(404)
       }
-      ctx.body = city
+      ctx.body = user
     } catch (err) {
       if (err.name === 'CastError' || err.name === 'NotFoundError') {
         ctx.throw(404)
@@ -89,4 +89,4 @@ class CitiesControllers {
   /* eslint-enable no-param-reassign */
 }
 
-export default new CitiesControllers()
+export default new UsersControllers()
