@@ -13,7 +13,7 @@ export default function (dirname) {
           return reject(err)
         }
         files.forEach((file) => {
-          const route = require(file) // eslint-disable-line global-require, import/no-dynamic-require
+          const route = require(file)// eslint-disable-line global-require, import/no-dynamic-require,max-len
           routes.push(route)
         })
         return resolve(routes)

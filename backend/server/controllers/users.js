@@ -4,6 +4,37 @@ class UsersControllers {
   /* eslint-disable no-param-reassign */
 
   /**
+   * 新增账号
+   * @param {ctx} Koa Context
+   */
+  async add(ctx) {
+    console.log('ctx------------', ctx.request.body)
+    // console.log('payload----',payload)
+    try {
+      const { account } = ctx.request.body
+      // console.log('account-----', account)
+      const getAccount = await User.findOne({ account })
+      console.log('getAccount--------', getAccount)
+      if (getAccount) {
+        ctx.body = {
+          state: false,
+          message: '账号已存在',
+        }
+      } else {
+        const user = await new User(ctx.request.body).save()
+        if (user) {
+          ctx.body = {
+            state: true,
+            message: '账号新增成功',
+          }
+        }
+      }
+    } catch (err) {
+      ctx.throw(err)
+    }
+  }
+
+  /**
    * Get all users
    * @param {ctx} Koa Context
    */
@@ -31,17 +62,24 @@ class UsersControllers {
   }
 
   /**
-   * Add a user
+   * 查找所有老师
    * @param {ctx} Koa Context
    */
-  async add(ctx) {
-    console.log('ctx', ctx.state)
-    // console.log('payload----',payload)
+  async findAllTeacher(ctx) {
     try {
-      const user = await new User(ctx.request.body).save()
-      ctx.body = user
+      const teachers = await User.find({ type: 'teacher' })
+      if (!teachers) {
+        ctx.throw(404)
+      }
+      ctx.body = teachers.map((i) => ({
+        account: i.account,
+        name: i.name,
+      }))
     } catch (err) {
-      ctx.throw(422)
+      if (err.name === 'CastError' || err.name === 'NotFoundError') {
+        ctx.throw(404)
+      }
+      ctx.throw(500)
     }
   }
 

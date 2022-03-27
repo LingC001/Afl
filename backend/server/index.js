@@ -3,8 +3,13 @@ import Koa from 'koa'
 import logger from 'koa-logger'
 import mongoose from 'mongoose'
 import helmet from 'koa-helmet'
+import _ from 'lodash'
 import routing from './routes'
 import { port, connexionString } from './config'
+import { colPick } from './utils/util'
+
+_.colPick = colPick
+global._ = _
 
 mongoose.connect(connexionString, {
   useNewUrlParser: true,
